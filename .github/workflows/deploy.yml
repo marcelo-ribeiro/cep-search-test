@@ -43,7 +43,7 @@ jobs:
   # Deploy job
   deploy:
     runs-on: ubuntu-latest
-    
+
     # Add a dependency to the build job
     needs: build
 
@@ -54,7 +54,7 @@ jobs:
 
     steps:
       - name: Setup Pages
-          uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v2
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
