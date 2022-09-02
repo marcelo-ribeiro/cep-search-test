@@ -1,9 +1,5 @@
 import styled from "styled-components";
 
-export const StyledCEPSearchForm = styled.form`
-  display: grid;
-  grid-gap: 0.5rem;
-`;
 export const StyledCEPSearchAddress = styled.section`
   display: grid;
   grid-gap: 0.5rem;

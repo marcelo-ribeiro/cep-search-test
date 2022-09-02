@@ -1,8 +1,8 @@
-import { AppButton } from "components/AppButton";
-import { AppInput } from "components/AppInput";
 import React, { memo, useState } from "react";
-import { fetchCEP } from "utils/fetchCEP";
-import { IAddress } from "./CEPSearchAddress";
+import { fetchCEP } from "../../../utils/fetchCEP";
+import { Button } from "../../Button";
+import { Input } from "../../Input";
+import { IAddress } from "../CEPSearchAddress";
 import { StyledCEPSearchForm } from "./styles";
 
 type CEPSearchFormProps = {
@@ -33,18 +33,22 @@ const CEPSearchForm = (props: CEPSearchFormProps) => {
 
   return (
     <StyledCEPSearchForm onSubmit={handleSubmit}>
-      <AppInput
-        label="Digite o CEP"
+      <Input
+        label="Digite o CEP:"
         id="cep"
-        maxLength={8}
+        name="zipcode"
+        autoFocus
+        autoComplete="postal-code"
+        inputMode="numeric"
+        maxLength={9}
         minLength={8}
         value={cep}
         onChange={handleChange}
         required
       />
-      <AppButton type="submit" disabled={isLoading}>
+      <Button type="submit" disabled={isLoading}>
         {isLoading ? "Carregando..." : "Buscar"}
-      </AppButton>
+      </Button>
     </StyledCEPSearchForm>
   );
 };

@@ -1,4 +1,6 @@
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { Button } from "../Button";
+import { Grid } from "../Grid";
 import CEPSearchAddress, { IAddress } from "./CEPSearchAddress";
 import { CEPSearchError } from "./CEPSearchError";
 import CEPSearchForm from "./CEPSearchForm";
@@ -17,13 +19,39 @@ export function CEPSearch() {
     setError(error);
   }, []);
 
-  return (
-    <>
-      <CEPSearchForm onSuccess={handleSuccess} onError={handleError} />
-
-      {error && <CEPSearchError error={error} />}
-
-      {address && <CEPSearchAddress address={address} />}
-    </>
+  const button = useMemo(
+    () => (
+      <Button
+        type="button"
+        autoFocus
+        onClick={() => {
+          setAddress(null);
+          setError(null);
+        }}
+      >
+        Nova busca
+      </Button>
+    ),
+    []
   );
+
+  if (error) {
+    return (
+      <Grid>
+        <CEPSearchError error={error} />
+        {button}
+      </Grid>
+    );
+  }
+
+  if (address) {
+    return (
+      <Grid gap="1.5rem">
+        <CEPSearchAddress address={address} />
+        {button}
+      </Grid>
+    );
+  }
+
+  return <CEPSearchForm onSuccess={handleSuccess} onError={handleError} />;
 }

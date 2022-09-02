@@ -1,12 +1,18 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
+import { ThemeProvider } from "styled-components";
+import { defaultTheme } from "themes/theme";
 import { CEP_API_URL } from "utils/fetchCEP";
-import CEPSearchForm from "./CEPSearchForm";
-import { fakeAddress, server } from "./testServer";
+import CEPSearchForm from ".";
+import { fakeAddress, server } from "../testServer";
 
 describe("CEPSearchForm", () => {
   it("should disable button and active loading on submit", async () => {
-    render(<CEPSearchForm />);
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <CEPSearchForm />
+      </ThemeProvider>
+    );
 
     fireEvent.change(
       screen.getByRole("textbox", {
@@ -35,7 +41,11 @@ describe("CEPSearchForm", () => {
   it("should submit without validation errors", async () => {
     const mockSuccess = jest.fn();
 
-    render(<CEPSearchForm onSuccess={mockSuccess} />);
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <CEPSearchForm onSuccess={mockSuccess} />
+      </ThemeProvider>
+    );
 
     fireEvent.change(
       screen.getByRole("textbox", {
@@ -64,7 +74,11 @@ describe("CEPSearchForm", () => {
     const mockError = jest.fn();
     const cep = "12345678";
 
-    render(<CEPSearchForm onError={mockError} />);
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <CEPSearchForm onError={mockError} />
+      </ThemeProvider>
+    );
 
     fireEvent.change(
       screen.getByRole("textbox", {
@@ -81,7 +95,11 @@ describe("CEPSearchForm", () => {
   });
 
   it("should show the validity", async () => {
-    render(<CEPSearchForm />);
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <CEPSearchForm />
+      </ThemeProvider>
+    );
     fireEvent.click(screen.getByRole("button"));
     await waitFor(() => {
       expect(

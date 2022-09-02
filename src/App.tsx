@@ -1,16 +1,22 @@
-import { StyledApp, StyledHeader } from "styles/AppStyles";
+import { ThemeProvider } from "styled-components";
+import { GlobalStyle } from "styles/global";
+import { defaultTheme } from "themes/theme";
 import { CEPSearch } from "./components/CEPSearch";
+import { StyledApp, StyledHeader, StyledMain } from "./styles/AppStyles";
 
 function App() {
   return (
-    <StyledApp>
-      <StyledHeader>
-        <h1>Busca Via CEP</h1>
-      </StyledHeader>
-      <main>
-        <CEPSearch />
-      </main>
-    </StyledApp>
+    <ThemeProvider theme={defaultTheme}>
+      <GlobalStyle />
+      <StyledApp>
+        <StyledHeader>
+          <h1>Busca CEP</h1>
+        </StyledHeader>
+        <StyledMain>
+          <CEPSearch />
+        </StyledMain>
+      </StyledApp>
+    </ThemeProvider>
   );
 }
 

@@ -1,11 +1,10 @@
 import { StyledInput, StyledInputWrapper, StyledLabel } from "./styles";
 
-interface AppInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+type Props = React.InputHTMLAttributes<HTMLInputElement> & {
   label?: string;
-  children?: React.ReactNode;
-}
+};
 
-export const AppInput = (props: AppInputProps) => {
+export const Input = (props: Props) => {
   return (
     <StyledInputWrapper>
       {!!props.label && (

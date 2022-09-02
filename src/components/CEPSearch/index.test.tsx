@@ -1,12 +1,22 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { rest } from "msw";
+import { ThemeProvider } from "styled-components";
+import { defaultTheme } from "themes/theme";
 import { CEP_API_URL } from "utils/fetchCEP";
 import { CEPSearch } from ".";
 import { fakeAddress, server } from "./testServer";
 
 describe("CEPSearch", () => {
+  const setup = () => {
+    render(
+      <ThemeProvider theme={defaultTheme}>
+        <CEPSearch />
+      </ThemeProvider>
+    );
+  };
+
   it("should render only form", async () => {
-    render(<CEPSearch />);
+    setup();
     expect(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
@@ -17,7 +27,7 @@ describe("CEPSearch", () => {
   });
 
   it("should render cep address on form submit", async () => {
-    render(<CEPSearch />);
+    setup();
 
     fireEvent.change(
       screen.getByRole("textbox", {
@@ -36,13 +46,13 @@ describe("CEPSearch", () => {
   });
 
   it("should render error on form submit", async () => {
+    setup();
+
     server.use(
       rest.get(`${CEP_API_URL}/*`, (req, res, ctx) => {
         return res(ctx.status(500));
       })
     );
-
-    render(<CEPSearch />);
 
     fireEvent.change(
       screen.getByRole("textbox", {
