@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CEPSearchAddress from ".";
+import { CEPSearchAddress } from ".";
 
 describe("CEPSearchAddress", () => {
   it("should render", () => {

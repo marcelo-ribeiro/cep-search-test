@@ -13,7 +13,7 @@ interface CEPSearchAddressProps {
   address: IAddress;
 }
 
-const CEPSearchAddress = (props: CEPSearchAddressProps) => {
+const _CEPSearchAddress = (props: CEPSearchAddressProps) => {
   return (
     <StyledCEPSearchAddress>
       <p>
@@ -32,4 +32,4 @@ const CEPSearchAddress = (props: CEPSearchAddressProps) => {
   );
 };
 
-export default memo(CEPSearchAddress);
+export const CEPSearchAddress = memo(_CEPSearchAddress);

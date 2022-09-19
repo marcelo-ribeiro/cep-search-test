@@ -3,7 +3,7 @@ import { rest } from "msw";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "themes/theme";
 import { CEP_API_URL } from "utils/fetchCEP";
-import CEPSearchForm from ".";
+import { CEPSearchForm } from ".";
 import { fakeAddress, server } from "../testServer";
 
 describe("CEPSearchForm", () => {

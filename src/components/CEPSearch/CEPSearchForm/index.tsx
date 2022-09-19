@@ -10,7 +10,7 @@ type CEPSearchFormProps = {
   onError?: (error: string | null) => void;
 };
 
-const CEPSearchForm = (props: CEPSearchFormProps) => {
+const _CEPSearchForm = (props: CEPSearchFormProps) => {
   const [cep, setCep] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -53,4 +53,4 @@ const CEPSearchForm = (props: CEPSearchFormProps) => {
   );
 };
 
-export default memo(CEPSearchForm);
+export const CEPSearchForm = memo(_CEPSearchForm);

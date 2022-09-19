@@ -1,9 +1,9 @@
 import { useCallback, useMemo, useState } from "react";
 import { Button } from "../Button";
 import { Grid } from "../Grid";
-import CEPSearchAddress, { IAddress } from "./CEPSearchAddress";
+import { CEPSearchAddress, IAddress } from "./CEPSearchAddress";
 import { CEPSearchError } from "./CEPSearchError";
-import CEPSearchForm from "./CEPSearchForm";
+import { CEPSearchForm } from "./CEPSearchForm";
 
 export function CEPSearch() {
   const [address, setAddress] = useState<IAddress | null>(null);
