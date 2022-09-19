@@ -9,6 +9,7 @@ it("renders welcome message", () => {
       <App />
     </ThemeProvider>
   );
+
   expect(
     screen.getByRole("heading", {
       name: /busca cep/i,

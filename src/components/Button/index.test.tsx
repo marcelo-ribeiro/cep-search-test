@@ -6,16 +6,16 @@ import { Button } from ".";
 describe("Button", () => {
   it("should handle click", () => {
     const buttonText = "click here";
-    const testOnClick = jest.fn();
+    const handleOnClick = jest.fn();
 
     render(
       <ThemeProvider theme={defaultTheme}>
-        <Button onClick={testOnClick}>{buttonText}</Button>
+        <Button onClick={handleOnClick}>{buttonText}</Button>
       </ThemeProvider>
     );
 
     fireEvent.click(screen.getByRole("button", { name: buttonText }));
 
-    expect(testOnClick).toBeCalledTimes(1);
+    expect(handleOnClick).toBeCalledTimes(1);
   });
 });

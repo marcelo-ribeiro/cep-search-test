@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { StyledCEPSearchAddress } from "./styles";
+import { StyledCEPSearchAddress } from "./styled";
 
 export interface IAddress {
   cep?: string;
@@ -9,24 +9,24 @@ export interface IAddress {
   state?: string;
 }
 
-interface CEPSearchAddressProps {
+type CEPSearchAddressProps = {
   address: IAddress;
-}
+};
 
-const _CEPSearchAddress = (props: CEPSearchAddressProps) => {
+const _CEPSearchAddress = ({ address }: CEPSearchAddressProps) => {
   return (
     <StyledCEPSearchAddress>
       <p>
-        <strong>CEP:</strong> {props.address.cep}
+        <strong>CEP:</strong> {address.cep}
       </p>
       <p>
-        <strong>Rua:</strong> {props.address.street}
+        <strong>Rua:</strong> {address.street}
       </p>
       <p>
-        <strong>Cidade:</strong> {props.address.city}
+        <strong>Cidade:</strong> {address.city}
       </p>
       <p>
-        <strong>Estado:</strong> {props.address.state}
+        <strong>Estado:</strong> {address.state}
       </p>
     </StyledCEPSearchAddress>
   );

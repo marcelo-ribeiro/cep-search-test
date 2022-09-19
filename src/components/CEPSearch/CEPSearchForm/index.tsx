@@ -3,7 +3,7 @@ import { fetchCEP } from "../../../utils/fetchCEP";
 import { Button } from "../../Button";
 import { Input } from "../../Input";
 import { IAddress } from "../CEPSearchAddress";
-import { StyledCEPSearchForm } from "./styles";
+import { StyledCEPSearchForm } from "./styled";
 
 type CEPSearchFormProps = {
   onSuccess?: (address: IAddress | null) => void;
@@ -34,7 +34,8 @@ const _CEPSearchForm = (props: CEPSearchFormProps) => {
   return (
     <StyledCEPSearchForm onSubmit={handleSubmit}>
       <Input
-        label="Digite o CEP:"
+        label="Digite o CEP"
+        placeholder="40026-010"
         id="cep"
         name="zipcode"
         autoFocus
@@ -42,6 +43,7 @@ const _CEPSearchForm = (props: CEPSearchFormProps) => {
         inputMode="numeric"
         maxLength={9}
         minLength={8}
+        pattern="\d{5}-?\d{3}"
         value={cep}
         onChange={handleChange}
         required

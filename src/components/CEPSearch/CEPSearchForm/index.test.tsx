@@ -7,7 +7,7 @@ import { CEPSearchForm } from ".";
 import { fakeAddress, server } from "../testServer";
 
 describe("CEPSearchForm", () => {
-  it("should disable button and active loading on submit", async () => {
+  it("should to disable button and active loading on submit", async () => {
     render(
       <ThemeProvider theme={defaultTheme}>
         <CEPSearchForm />
@@ -71,12 +71,12 @@ describe("CEPSearchForm", () => {
       })
     );
 
-    const mockError = jest.fn();
+    const handleError = jest.fn();
     const cep = "12345678";
 
     render(
       <ThemeProvider theme={defaultTheme}>
-        <CEPSearchForm onError={mockError} />
+        <CEPSearchForm onError={handleError} />
       </ThemeProvider>
     );
 
@@ -90,17 +90,34 @@ describe("CEPSearchForm", () => {
     fireEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(mockError).toHaveBeenCalled();
+      expect(handleError).toHaveBeenCalled();
     });
   });
 
-  it("should show the validity", async () => {
+  it("should be invalid when no validate", async () => {
     render(
       <ThemeProvider theme={defaultTheme}>
         <CEPSearchForm />
       </ThemeProvider>
     );
+
     fireEvent.click(screen.getByRole("button"));
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("textbox", {
+          name: /digite o cep/i,
+        })
+      ).toBeInvalid();
+    });
+
+    fireEvent.change(
+      screen.getByRole("textbox", {
+        name: /digite o cep/i,
+      }),
+      { target: { value: "1234" } }
+    );
+
     await waitFor(() => {
       expect(
         screen.getByRole("textbox", {

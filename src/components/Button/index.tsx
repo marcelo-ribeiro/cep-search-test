@@ -1,4 +1,4 @@
-import { StyledButton } from "./styles";
+import { StyledButton } from "./styled";
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
