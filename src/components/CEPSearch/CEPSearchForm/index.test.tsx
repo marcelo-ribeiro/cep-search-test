@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "themes/theme";
@@ -14,19 +15,18 @@ describe("CEPSearchForm", () => {
       </ThemeProvider>
     );
 
-    fireEvent.change(
+    userEvent.type(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       }),
-      { target: { value: fakeAddress.cep } }
+      fakeAddress.cep
     );
 
     const button = screen.getByRole("button");
-    fireEvent.click(button);
+    userEvent.click(button);
 
-    await waitFor(() => {
-      expect(button).toBeDisabled();
-    });
+    expect(button).toBeDisabled();
+
     await waitFor(() => {
       expect(button).toHaveTextContent("Carregando...");
     });
@@ -47,14 +47,14 @@ describe("CEPSearchForm", () => {
       </ThemeProvider>
     );
 
-    fireEvent.change(
+    userEvent.type(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       }),
-      { target: { value: fakeAddress.cep } }
+      fakeAddress.cep
     );
 
-    fireEvent.click(screen.getByRole("button"));
+    userEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
       expect(mockSuccess).toHaveBeenCalled();
@@ -80,14 +80,14 @@ describe("CEPSearchForm", () => {
       </ThemeProvider>
     );
 
-    fireEvent.change(
+    userEvent.type(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       }),
-      { target: { value: cep } }
+      cep
     );
 
-    fireEvent.click(screen.getByRole("button"));
+    userEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
       expect(handleError).toHaveBeenCalled();
@@ -101,29 +101,20 @@ describe("CEPSearchForm", () => {
       </ThemeProvider>
     );
 
-    fireEvent.click(screen.getByRole("button"));
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole("textbox", {
-          name: /digite o cep/i,
-        })
-      ).toBeInvalid();
+    const textBox = screen.getByRole("textbox", {
+      name: /digite o cep/i,
     });
 
-    fireEvent.change(
-      screen.getByRole("textbox", {
-        name: /digite o cep/i,
-      }),
-      { target: { value: "1234" } }
-    );
+    userEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(
-        screen.getByRole("textbox", {
-          name: /digite o cep/i,
-        })
-      ).toBeInvalid();
+      expect(textBox).toBeInvalid();
+    });
+
+    userEvent.type(textBox, "1234");
+
+    await waitFor(() => {
+      expect(textBox).toBeInvalid();
     });
   });
 });

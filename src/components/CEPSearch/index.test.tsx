@@ -1,4 +1,5 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
 import { ThemeProvider } from "styled-components";
 import { defaultTheme } from "themes/theme";
@@ -15,37 +16,39 @@ describe("CEPSearch", () => {
     );
   };
 
-  it("should render only form", async () => {
+  it("should render only form", () => {
     setup();
+
     expect(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       })
     ).toBeInTheDocument();
+
     expect(screen.queryByText("CEP")).not.toBeInTheDocument();
+
     expect(screen.queryByText("CEP não encontrado")).not.toBeInTheDocument();
   });
 
   it("should render cep address on form submit", async () => {
     setup();
 
-    fireEvent.change(
+    userEvent.type(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       }),
-      {
-        target: { value: fakeAddress.cep },
-      }
+      fakeAddress.cep
     );
 
-    fireEvent.click(screen.getByRole("button"));
+    userEvent.click(screen.getByRole("button"));
 
-    await waitFor(() => {
-      expect(screen.getByText(fakeAddress.cep)).toBeInTheDocument();
-    });
+    expect(await screen.findByText(fakeAddress.cep)).toBeInTheDocument();
+    expect(await screen.findByText(fakeAddress.street)).toBeInTheDocument();
+    expect(await screen.findByText(fakeAddress.city)).toBeInTheDocument();
+    expect(await screen.findByText(fakeAddress.state)).toBeInTheDocument();
   });
 
-  it("should render error on form submit", async () => {
+  it("should render error", async () => {
     setup();
 
     server.use(
@@ -54,19 +57,15 @@ describe("CEPSearch", () => {
       })
     );
 
-    fireEvent.change(
+    userEvent.type(
       screen.getByRole("textbox", {
         name: /digite o cep/i,
       }),
-      {
-        target: { value: "12345678" },
-      }
+      "12345678"
     );
 
-    fireEvent.click(screen.getByRole("button"));
+    userEvent.click(screen.getByRole("button"));
 
-    await waitFor(() => {
-      expect(screen.getByText("CEP não encontrado")).toBeInTheDocument();
-    });
+    expect(await screen.findByText("CEP não encontrado")).toBeInTheDocument();
   });
 });
