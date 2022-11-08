@@ -13,7 +13,7 @@ type CEPSearchAddressProps = {
   address: IAddress;
 };
 
-const _CEPSearchAddress = ({ address }: CEPSearchAddressProps) => {
+export const CEPSearchAddress = memo(({ address }: CEPSearchAddressProps) => {
   return (
     <StyledCEPSearchAddress>
       <p>
@@ -30,6 +30,4 @@ const _CEPSearchAddress = ({ address }: CEPSearchAddressProps) => {
       </p>
     </StyledCEPSearchAddress>
   );
-};
-
-export const CEPSearchAddress = memo(_CEPSearchAddress);
+});

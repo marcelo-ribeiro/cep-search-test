@@ -26,24 +26,17 @@ describe("CEPSearchForm", () => {
     userEvent.click(button);
 
     expect(button).toBeDisabled();
-
-    await waitFor(() => {
-      expect(button).toHaveTextContent("Carregando...");
-    });
-    await waitFor(() => {
-      expect(button).not.toBeDisabled();
-    });
-    await waitFor(() => {
-      expect(button).toHaveTextContent("Buscar");
-    });
+    await waitFor(() => expect(button).toHaveTextContent("Carregando..."));
+    await waitFor(() => expect(button).not.toBeDisabled());
+    await waitFor(() => expect(button).toHaveTextContent("Buscar"));
   });
 
-  it("should submit without validation errors", async () => {
-    const mockSuccess = jest.fn();
+  it("should submit with success", async () => {
+    const handleSuccess = jest.fn();
 
     render(
       <ThemeProvider theme={defaultTheme}>
-        <CEPSearchForm onSuccess={mockSuccess} />
+        <CEPSearchForm onSuccess={handleSuccess} />
       </ThemeProvider>
     );
 
@@ -57,10 +50,10 @@ describe("CEPSearchForm", () => {
     userEvent.click(screen.getByRole("button"));
 
     await waitFor(() => {
-      expect(mockSuccess).toHaveBeenCalled();
+      expect(handleSuccess).toHaveBeenCalled();
     });
     await waitFor(() => {
-      expect(mockSuccess).toHaveBeenCalledWith(fakeAddress);
+      expect(handleSuccess).toHaveBeenCalledWith(fakeAddress);
     });
   });
 
@@ -107,9 +100,7 @@ describe("CEPSearchForm", () => {
 
     userEvent.click(screen.getByRole("button"));
 
-    await waitFor(() => {
-      expect(textBox).toBeInvalid();
-    });
+    expect(textBox).toBeInvalid();
 
     userEvent.type(textBox, "1234");
 

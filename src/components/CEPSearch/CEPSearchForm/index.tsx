@@ -6,20 +6,20 @@ import { IAddress } from "../CEPSearchAddress";
 import { StyledCEPSearchForm } from "./styled";
 
 type CEPSearchFormProps = {
-  onSuccess?: (address: IAddress | null) => void;
-  onError?: (error: string | null) => void;
+  onSuccess?(address: IAddress): void;
+  onError?(error: string): void;
 };
 
-const _CEPSearchForm = (props: CEPSearchFormProps) => {
+export const CEPSearchForm = memo((props: CEPSearchFormProps) => {
   const [cep, setCep] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCep(e.target.value);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setCep(event.target.value);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     setIsLoading(true);
     try {
       const address = await fetchCEP(cep);
@@ -53,6 +53,4 @@ const _CEPSearchForm = (props: CEPSearchFormProps) => {
       </Button>
     </StyledCEPSearchForm>
   );
-};
-
-export const CEPSearchForm = memo(_CEPSearchForm);
+});
